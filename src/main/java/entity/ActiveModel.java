@@ -27,7 +27,47 @@ public class ActiveModel {
         return ourSessionFactory.openSession();
     }
 
-    private void dbRequest(String method) throws SQLException {
+    /* Public section */
+
+    public void save() {
+        try {
+            sensitiveDBRequest("save");
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public void update() {
+        try {
+            sensitiveDBRequest("update");
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public void delete() {
+        try {
+            sensitiveDBRequest("delete");
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public Object getById(int id) {
+        Session session = null;
+        Object object = null;
+        try {
+            session = getSession();
+            object = session.load(this.getClass(), id);
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return object;
+    }
+
+    /* Private section */
+
+    private void sensitiveDBRequest(String method) throws SQLException {
         Session session = null;
         try {
             session = getSession();
@@ -48,27 +88,10 @@ public class ActiveModel {
 
     private Method getMethodByName(String methodName, Session session) {
         try {
-
             return session.getClass().getMethod(methodName, Object.class);
         } catch(NoSuchMethodException exception) {
             System.out.println(exception);
             return null;
-        }
-    }
-
-    public void save() {
-        try {
-            dbRequest("save");
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-    }
-
-    public void update() {
-        try {
-            dbRequest("update");
-        } catch (SQLException ex) {
-            System.out.println(ex);
         }
     }
 }

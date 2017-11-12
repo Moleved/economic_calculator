@@ -13,9 +13,12 @@ import java.util.Map;
 public class Main {
     public static void main(final String[] args) throws Exception {
         System.out.println("Processing...");
-        LiquidityEntity liq = new LiquidityEntity();
-        liq.setResult(111.11);
-        liq.save();
+//        LiquidityEntity liq = new LiquidityEntity();
+//        liq.setResult(111.11);
+//        liq.save();
+
+        LiquidityEntity liq1 = (LiquidityEntity) new LiquidityEntity().getById(2);
+        System.out.println(liq1.getId() + liq1.getResult());
         System.out.println("Done!");
     }
 }
