@@ -1,8 +1,27 @@
 package entity;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="current_liquidity")
 public class CurrentLiquidityEntity {
+    @Id @Column(name="id")
     private int id;
+    @Column(name="revolving_assets")
     private double revolvingAssets;
+    @OneToOne
+    @JoinColumns(
+            @JoinColumn(name="liquidity_id", referencedColumnName="id")
+    )
+    private LiquidityEntity liquidity;
+
+    public LiquidityEntity getLiquidity() {
+        return liquidity;
+    }
+
+    public void setLiquidity(LiquidityEntity liquidity) {
+        this.liquidity = liquidity;
+    }
 
     public int getId() {
         return id;

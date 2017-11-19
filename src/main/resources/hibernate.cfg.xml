@@ -13,10 +13,11 @@
         <property name="current_session_context_class">thread</property>
         <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
 
-        <mapping resource="AbsoluteLiquidityEntity.hbm.xml"/>
-        <mapping resource="CurrentLiquidityEntity.hbm.xml"/>
-        <mapping resource="LiquidityEntity.hbm.xml"/>
-        <mapping resource="ProfitabilityEntity.hbm.xml"/>
+        <mapping package="entity"/>
+        <mapping class="entity.ProfitabilityEntity"/>
+        <mapping class="entity.LiquidityEntity"/>
+        <mapping class="entity.AbsoluteLiquidityEntity"/>
+        <mapping class="entity.CurrentLiquidityEntity"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>

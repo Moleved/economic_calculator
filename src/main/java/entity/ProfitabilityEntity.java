@@ -4,8 +4,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="profitability")
-public class ProfitabilityEntity {
-    @Id @GeneratedValue
+public class ProfitabilityEntity extends ActiveModel {
+    @Id
     @Column(name="id")
     private int id;
 

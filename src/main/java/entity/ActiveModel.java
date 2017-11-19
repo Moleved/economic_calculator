@@ -80,7 +80,7 @@ public class ActiveModel {
         } catch (InvocationTargetException ex) {
             System.out.println(ex);
         } catch (IllegalAccessException ex) {
-            System.out.println(ex);
+            System.out.println(ex.getCause());
         } finally {
             if(session != null && session.isOpen()) session.close();
         }

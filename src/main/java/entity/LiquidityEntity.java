@@ -1,8 +1,27 @@
 package entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="liquidity")
 public class LiquidityEntity extends ActiveModel {
+    @Id @Column(name="id")
     private int id;
+    @Column(name="result")
     private Double result;
+    @Column(name="type")
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public int getId() {
         return id;

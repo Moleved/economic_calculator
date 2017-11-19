@@ -1,9 +1,29 @@
 package entity;
 
-public class AbsoluteLiquidityEntity {
+import javax.persistence.*;
+
+@Entity
+@Table(name="absolute_liquidity")
+public class AbsoluteLiquidityEntity extends ActiveModel {
+    @Id @Column(name="id")
     private int id;
+    @Column(name="short_financial_investments")
     private double shortFinancialInvestments;
+    @Column(name="funds")
     private double funds;
+    @OneToOne
+    @JoinColumns(
+            @JoinColumn(name="liquidity_id", referencedColumnName="id")
+    )
+    private LiquidityEntity liquidity;
+
+    public LiquidityEntity getLiquidity() {
+        return liquidity;
+    }
+
+    public void setLiquidity(LiquidityEntity liquidity) {
+        this.liquidity = liquidity;
+    }
 
     public int getId() {
         return id;
