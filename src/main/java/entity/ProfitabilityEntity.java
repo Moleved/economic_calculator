@@ -5,8 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="profitability")
 public class ProfitabilityEntity extends ActiveModel {
-    @Id
-    @Column(name="id")
+    @Id @Column(name="id")
     private int id;
 
     @Column(name="profit_from_all_activities")
