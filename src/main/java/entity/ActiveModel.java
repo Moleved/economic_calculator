@@ -2,12 +2,15 @@ package entity;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ActiveModel {
     private static final SessionFactory ourSessionFactory;
@@ -63,6 +66,19 @@ public class ActiveModel {
             System.out.println(ex);
         }
         return object;
+    }
+
+    public List<ActiveModel> getAll() {
+        Session session = null;
+        List<ActiveModel> list = new ArrayList<ActiveModel>();
+        try {
+            session = getSession();
+            list = session.createQuery("from " + this.getClass().getSimpleName()).list();
+        } catch(SessionException ex) {
+            System.out.println(ex.getStackTrace());
+        }
+
+        return list;
     }
 
     /* Private section */

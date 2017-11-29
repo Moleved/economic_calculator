@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Table(name="profitability")
 public class ProfitabilityEntity extends ActiveModel {
     @Id @Column(name="id")
+    @GeneratedValue
     private int id;
 
     @Column(name="profit_from_all_activities")

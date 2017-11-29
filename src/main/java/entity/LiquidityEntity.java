@@ -1,14 +1,16 @@
 package entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.google.common.base.CaseFormat;
+import org.hibernate.Session;
+
+import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @Table(name="liquidity")
 public class LiquidityEntity extends ActiveModel {
     @Id @Column(name="id")
+    @GeneratedValue
     private int id;
     @Column(name="result")
     private Double result;

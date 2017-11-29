@@ -1,4 +1,5 @@
 import entity.AbsoluteLiquidityEntity;
+import entity.ActiveModel;
 import entity.LiquidityEntity;
 import entity.ProfitabilityEntity;
 import org.hibernate.HibernateException;
@@ -10,6 +11,8 @@ import org.hibernate.cfg.Configuration;
 
 import javax.persistence.metamodel.EntityType;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Main {
@@ -30,16 +33,20 @@ public class Main {
 //        prof.save();
 
         LiquidityEntity liq = new LiquidityEntity();
-        liq.setId(333);
-        liq.setResult(123.0);
-        liq.setType("absolute");
-        liq.save();
+//        liq.setResult(123.0);
+//        liq.setType("absolute");
+//
+//        System.out.println(liq.getId());
+//
+//        liq.save();
+//
+//        System.out.println(liq.getId());
 
-        AbsoluteLiquidityEntity absLiq = new AbsoluteLiquidityEntity();
-        absLiq.setId(13);
-        absLiq.setFunds(12.4);
-        absLiq.setLiquidity(liq);
-        absLiq.setShortFinancialInvestments(124.5);
-        absLiq.save();
+        List<ActiveModel> list = liq.getAll();
+
+        for (ActiveModel elem : list) {
+            LiquidityEntity foo = (LiquidityEntity) elem;
+            System.out.println(foo.getId() + " : " + foo.getResult()+ " : " + foo.getType());
+        }
     }
 }

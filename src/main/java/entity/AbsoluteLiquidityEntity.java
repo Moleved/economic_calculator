@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Table(name="absolute_liquidity")
 public class AbsoluteLiquidityEntity extends ActiveModel {
     @Id @Column(name="id")
+    @GeneratedValue
     private int id;
     @Column(name="short_financial_investments")
     private double shortFinancialInvestments;

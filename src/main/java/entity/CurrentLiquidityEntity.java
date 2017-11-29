@@ -4,8 +4,9 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="current_liquidity")
-public class CurrentLiquidityEntity {
+public class CurrentLiquidityEntity extends ActiveModel {
     @Id @Column(name="id")
+    @GeneratedValue
     private int id;
     @Column(name="revolving_assets")
     private double revolvingAssets;
