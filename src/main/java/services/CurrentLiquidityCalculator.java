@@ -1,6 +1,7 @@
 package services;
 
 import entity.CurrentLiquidityEntity;
+import entity.LiquidityEntity;
 
 public class CurrentLiquidityCalculator {
     private double revolvingAssets;
@@ -11,7 +12,18 @@ public class CurrentLiquidityCalculator {
         this.revolvingAssets = entity.getRevolvingAssets();
     }
 
-    public double calculate() {
+    public void perform() {
+        double result = calculate();
+
+        LiquidityEntity entity = new LiquidityEntity();
+
+        entity.setType("current");
+        entity.setResult(result);
+
+        entity.save();
+    }
+
+    private double calculate() {
         return revolvingAssets / shortLiabilities;
     }
 }

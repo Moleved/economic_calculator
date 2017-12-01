@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class MessageParser {
     private String message;
 
-    private String appId;
+    private static String appId;
     private String method;
     private String object;
     private String values;
@@ -19,14 +19,14 @@ public class MessageParser {
     public void parse() {
         String[] arr = message.split(";");
 
-        this.appId = arr[0];
+        appId = arr[0];
         this.method = arr[1];
         this.object = arr[2];
         this.values = arr[3];
     }
 
-    public String getAppId() {
-        return appId;
+    public static int getAppId() {
+        return Integer.parseInt(appId);
     }
 
     public String getMethod() {

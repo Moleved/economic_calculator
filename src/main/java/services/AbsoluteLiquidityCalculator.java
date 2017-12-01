@@ -1,6 +1,7 @@
 package services;
 
 import entity.AbsoluteLiquidityEntity;
+import entity.LiquidityEntity;
 
 public class AbsoluteLiquidityCalculator {
     private double shortLiabilities;
@@ -13,7 +14,18 @@ public class AbsoluteLiquidityCalculator {
         this.shortFinancialInvestments = entity.getShortFinancialInvestments();
     }
 
-    public double calculate() {
+    public void perform() {
+        double result = calculate();
+
+        LiquidityEntity entity = new LiquidityEntity();
+
+        entity.setType("absolute");
+        entity.setResult(result);
+
+        entity.save();
+    }
+
+    private double calculate() {
         return (funds + shortFinancialInvestments) / shortLiabilities;
     }
 }

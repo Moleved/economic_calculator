@@ -1,7 +1,4 @@
-import entity.AbsoluteLiquidityEntity;
-import entity.ActiveModel;
-import entity.LiquidityEntity;
-import entity.ProfitabilityEntity;
+import entity.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Metamodel;
 import org.hibernate.query.Query;
@@ -15,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Main {
+public class Main implements Runnable {
     public static void main(final String[] args) throws Exception {
 //        System.out.println("Processing...");
 //        LiquidityEntity liq = new LiquidityEntity();
@@ -32,21 +29,48 @@ public class Main {
 //        prof.setTotalProductSalesCosts(1.0);
 //        prof.save();
 
-        LiquidityEntity liq = new LiquidityEntity();
+        ApplicationEntity app = new ApplicationEntity();
+//        app.setId(13);
+//        app.save();
+
+//        LiquidityEntity liq = new LiquidityEntity();
 //        liq.setResult(123.0);
 //        liq.setType("absolute");
-//
-//        System.out.println(liq.getId());
+//        liq.setAppId(app);
 //
 //        liq.save();
+
 //
-//        System.out.println(liq.getId());
+//        List<ActiveModel> list = liq.getAll();
+//
+//        for (ActiveModel elem : list) {
+//            LiquidityEntity foo = (LiquidityEntity) elem;
+//            System.out.println(foo.getId() + " : " + foo.getResult()+ " : " + foo.getType());
+//        }
+//
+        ApplicationEntity last = (ApplicationEntity) app.getLast();
+//
+        System.out.println(last.getId());
 
-        List<ActiveModel> list = liq.getAll();
+        LiquidityEntity liq = new LiquidityEntity();
 
-        for (ActiveModel elem : list) {
-            LiquidityEntity foo = (LiquidityEntity) elem;
-            System.out.println(foo.getId() + " : " + foo.getResult()+ " : " + foo.getType());
-        }
+        liq.setResult(1.1);
+        liq.setType("absolute");
+
+        liq.save();
+
+        CurrentLiquidityEntity cliq = new CurrentLiquidityEntity();
+
+        cliq.setRevolvingAssets(2.3);
+        cliq.setShortLiabilities(43);
+        cliq.setLiquidity(liq);
+
+        cliq.save();
+
+        System.out.println(cliq.getLiquidity().getId());
+    }
+
+    public void run() {
+
     }
 }

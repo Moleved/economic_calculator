@@ -1,10 +1,6 @@
 package entity;
 
-import com.google.common.base.CaseFormat;
-import org.hibernate.Session;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 
 @Entity
 @Table(name="liquidity")
@@ -16,6 +12,11 @@ public class LiquidityEntity extends ActiveModel {
     private Double result;
     @Column(name="type")
     private String type;
+    @OneToOne
+    @JoinColumns(
+            @JoinColumn(name="app_id", referencedColumnName="id")
+    )
+    private ApplicationEntity appId;
 
     public String getType() {
         return type;
@@ -39,6 +40,14 @@ public class LiquidityEntity extends ActiveModel {
 
     public void setResult(Double result) {
         this.result = result;
+    }
+
+    public ApplicationEntity getAppId() {
+        return appId;
+    }
+
+    public void setAppId(ApplicationEntity app_id) {
+        this.appId = app_id;
     }
 
     @Override

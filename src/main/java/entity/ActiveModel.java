@@ -33,26 +33,16 @@ public class ActiveModel {
     /* Public section */
 
     public void save() {
+        Session session = null;
         try {
-            sensitiveDBRequest("save");
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-    }
+            session = getSession();
 
-    public void update() {
-        try {
-            sensitiveDBRequest("update");
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-    }
+            session.beginTransaction();
+            session.save(this);
+            session.getTransaction().commit();
 
-    public void delete() {
-        try {
-            sensitiveDBRequest("delete");
-        } catch (SQLException ex) {
-            System.out.println(ex);
+        } finally {
+            if(session != null && session.isOpen()) session.close();
         }
     }
 
@@ -81,26 +71,20 @@ public class ActiveModel {
         return list;
     }
 
-    /* Private section */
-
-    private void sensitiveDBRequest(String method) throws SQLException {
+    public Object getLast() {
         Session session = null;
+        Object object = null;
         try {
             session = getSession();
-            Method callableMethod = getMethodByName(method, session);
-
-            session.beginTransaction();
-            callableMethod.invoke(session, this);
-            session.getTransaction().commit();
-
-        } catch (InvocationTargetException ex) {
-            System.out.println(ex);
-        } catch (IllegalAccessException ex) {
-            System.out.println(ex.getCause());
-        } finally {
-            if(session != null && session.isOpen()) session.close();
+            object = session.createQuery("FROM " + this.getClass().getSimpleName() + " ORDER BY id DESC").setMaxResults(1).list().get(0);
+        } catch (SessionException se) {
+            System.out.println(se.getStackTrace());
         }
+
+        return object;
     }
+
+    /* Private section */
 
     private Method getMethodByName(String methodName, Session session) {
         try {
