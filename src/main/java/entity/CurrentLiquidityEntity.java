@@ -10,6 +10,8 @@ public class CurrentLiquidityEntity extends ActiveModel {
     private int id;
     @Column(name="revolving_assets")
     private double revolvingAssets;
+    @Column(name="short_liabilities")
+    private double shortLiabilities;
     @OneToOne
     @JoinColumns(
             @JoinColumn(name="liquidity_id", referencedColumnName="id")
@@ -38,6 +40,14 @@ public class CurrentLiquidityEntity extends ActiveModel {
 
     public void setRevolvingAssets(double revolvingAssets) {
         this.revolvingAssets = revolvingAssets;
+    }
+
+    public double getShortLiabilities() {
+        return shortLiabilities;
+    }
+
+    public void setShortLiabilities(double shortLiabilities) {
+        this.shortLiabilities = shortLiabilities;
     }
 
     @Override

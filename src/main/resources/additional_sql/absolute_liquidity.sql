@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS absolute_liquidity(
   app_id INT NOT NULL,
   funds DOUBLE NOT NULL,
   short_financial_investments DOUBLE NOT NULL,
+  short_liabilities DOUBLE NOT NULL,
   FOREIGN KEY (liquidity_id)
     REFERENCES liquidity (id)
     ON DELETE RESTRICT

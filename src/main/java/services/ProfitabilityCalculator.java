@@ -1,6 +1,6 @@
-package com.calculator.services;
+package services;
 
-public class ProfitabilityCalculator extends CalculatorInstance {
+public class ProfitabilityCalculator {
     private double profitFromAllActivities;
     private double totalProductSalesCosts;
 
@@ -10,6 +10,6 @@ public class ProfitabilityCalculator extends CalculatorInstance {
     }
 
     public double calculate() {
-        return super.calculateDivision(profitFromAllActivities, totalProductSalesCosts);
+        return profitFromAllActivities / totalProductSalesCosts;
     }
 }

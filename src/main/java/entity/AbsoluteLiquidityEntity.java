@@ -12,6 +12,8 @@ public class AbsoluteLiquidityEntity extends ActiveModel {
     private double shortFinancialInvestments;
     @Column(name="funds")
     private double funds;
+    @Column(name="short_liabilities")
+    private double shortLiabilities;
     @OneToOne
     @JoinColumns(
             @JoinColumn(name="liquidity_id", referencedColumnName="id")
@@ -40,6 +42,14 @@ public class AbsoluteLiquidityEntity extends ActiveModel {
 
     public void setShortFinancialInvestments(double shortFinancialInvestments) {
         this.shortFinancialInvestments = shortFinancialInvestments;
+    }
+
+    public double getShortLiabilities() {
+        return shortLiabilities;
+    }
+
+    public void setShortLiabilities(double shortLiabilities) {
+        this.shortLiabilities = shortLiabilities;
     }
 
     public double getFunds() {

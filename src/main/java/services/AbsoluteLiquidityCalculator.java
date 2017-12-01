@@ -1,16 +1,19 @@
-package com.calculator.services;
+package services;
 
-public class AbsoluteLiquidityCalculator extends LiquidityCalculator {
+import entity.AbsoluteLiquidityEntity;
+
+public class AbsoluteLiquidityCalculator {
+    private double shortLiabilities;
     private double funds;
     private double shortFinancialInvestments;
 
-    public AbsoluteLiquidityCalculator(double shortLiabilities, double funds, double shortFinancialInvestments) {
-        super(shortLiabilities);
-        this.funds = funds;
-        this.shortFinancialInvestments = shortFinancialInvestments;
+    public AbsoluteLiquidityCalculator(AbsoluteLiquidityEntity entity) {
+        this.shortLiabilities = entity.getShortLiabilities();
+        this.funds = entity.getFunds();
+        this.shortFinancialInvestments = entity.getShortFinancialInvestments();
     }
 
     public double calculate() {
-        return super.calculateDivision(funds + shortFinancialInvestments, getShortLiabilities());
+        return (funds + shortFinancialInvestments) / shortLiabilities;
     }
 }

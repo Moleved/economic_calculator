@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS current_liquidity (
   liquidity_id INT NOT NULL,
   app_id INT NOT NULL,
   revolving_assets DOUBLE NOT NULL,
+  short_liabilities DOUBLE NOT NULL,
   FOREIGN KEY (liquidity_id)
     REFERENCES liquidity (id)
     ON DELETE RESTRICT

@@ -1,14 +1,17 @@
-package com.calculator.services;
+package services;
 
-public class CurrentLiquidityCalculator extends LiquidityCalculator {
+import entity.CurrentLiquidityEntity;
+
+public class CurrentLiquidityCalculator {
     private double revolvingAssets;
+    private double shortLiabilities;
 
-    public CurrentLiquidityCalculator(double shortLiabilities, double revolvingAssets) {
-        super(shortLiabilities);
-        this.revolvingAssets = revolvingAssets;
+    public CurrentLiquidityCalculator(CurrentLiquidityEntity entity) {
+        this.shortLiabilities = entity.getShortLiabilities();
+        this.revolvingAssets = entity.getRevolvingAssets();
     }
 
     public double calculate() {
-        return super.calculateDivision(revolvingAssets, getShortLiabilities());
+        return revolvingAssets / shortLiabilities;
     }
 }
