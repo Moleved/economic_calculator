@@ -84,7 +84,7 @@ public class MessageHandler {
             result += (ent.toString() + ";");
         }
 
-        return result;
+        return result + "break";
     }
 
     private String listCurrentLiquidity() {
@@ -95,7 +95,7 @@ public class MessageHandler {
             result += (ent.toString() + ";");
         }
 
-        return result;
+        return result + "break";
     }
 
     private String listProfitability() {
@@ -106,6 +106,6 @@ public class MessageHandler {
             result += (ent.toString() + ";");
         }
 
-        return result;
+        return result + "break";
     }
 }
