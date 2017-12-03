@@ -78,7 +78,7 @@ public class MessageHandler {
 
     private String listAbsoluteLiquidity() {
         ArrayList<AbsoluteLiquidityEntity> list = AbsoluteLiquidityEntity.getAll();
-        String result = "AbsoluteLiquidityEntity;";
+        String result = "AbsoluteLiquidityEntity>";
 
         for (AbsoluteLiquidityEntity ent : list) {
             result += (ent.toString() + ";");
@@ -89,7 +89,7 @@ public class MessageHandler {
 
     private String listCurrentLiquidity() {
         ArrayList<CurrentLiquidityEntity> list = CurrentLiquidityEntity.getAll();
-        String result = "CurrentLiquidityEntity;";
+        String result = "CurrentLiquidityEntity>";
 
         for (CurrentLiquidityEntity ent : list) {
             result += (ent.toString() + ";");
@@ -100,7 +100,7 @@ public class MessageHandler {
 
     private String listProfitability() {
         ArrayList<ProfitabilityEntity> list = ProfitabilityEntity.getAll();
-        String result = "ProfitabilityEntity;";
+        String result = "ProfitabilityEntity>";
 
         for (ProfitabilityEntity ent : list) {
             result += (ent.toString() + ";");
