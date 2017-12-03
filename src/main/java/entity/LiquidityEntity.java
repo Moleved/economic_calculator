@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="liquidity")
@@ -16,7 +17,15 @@ public class LiquidityEntity extends ActiveModel {
     @JoinColumns(
             @JoinColumn(name="app_id", referencedColumnName="id")
     )
-    private ApplicationEntity appId;
+    private ApplicationEntity application;
+
+    public ApplicationEntity getApplication() {
+        return application;
+    }
+
+    public void setApplication(ApplicationEntity application) {
+        this.application = application;
+    }
 
     public String getType() {
         return type;
@@ -42,31 +51,15 @@ public class LiquidityEntity extends ActiveModel {
         this.result = result;
     }
 
-    public ApplicationEntity getAppId() {
-        return appId;
+    public static List<ActiveModel> getAll() {
+        return getAll(LiquidityEntity.class);
     }
 
-    public void setAppId(ApplicationEntity app_id) {
-        this.appId = app_id;
+    public static Object getLast() {
+        return getLast(LiquidityEntity.class);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        LiquidityEntity that = (LiquidityEntity) o;
-
-        if (id != that.id) return false;
-        if (result != null ? !result.equals(that.result) : that.result != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result1 = id;
-        result1 = 31 * result1 + (result != null ? result.hashCode() : 0);
-        return result1;
+    public static Object getById(int id) {
+        return getById(id, LiquidityEntity.class);
     }
 }

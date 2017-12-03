@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @Table(name="current_liquidity")
@@ -17,6 +18,48 @@ public class CurrentLiquidityEntity extends ActiveModel {
             @JoinColumn(name="liquidity_id", referencedColumnName="id")
     )
     private LiquidityEntity liquidity;
+    @OneToOne
+    @JoinColumns(
+            @JoinColumn(name="app_id", referencedColumnName="id")
+    )
+    private ApplicationEntity application;
+
+    public static ArrayList<CurrentLiquidityEntity> getAll() {
+        ArrayList<ActiveModel> list = (ArrayList<ActiveModel>) getAll(CurrentLiquidityEntity.class);
+        ArrayList<CurrentLiquidityEntity> result = new ArrayList<CurrentLiquidityEntity>();
+
+        for (ActiveModel elem : list) {
+            result.add((CurrentLiquidityEntity) elem);
+        }
+
+        return result;
+    }
+
+    public static CurrentLiquidityEntity getLast() {
+        try {
+            return (CurrentLiquidityEntity) getLast(CurrentLiquidityEntity.class);
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public static CurrentLiquidityEntity getById(int id) {
+        try {
+            return (CurrentLiquidityEntity) getById(id, CurrentLiquidityEntity.class);
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    /* Getters and Setters */
+
+    public ApplicationEntity getApplication() {
+        return application;
+    }
+
+    public void setApplication(ApplicationEntity application) {
+        this.application = application;
+    }
 
     public LiquidityEntity getLiquidity() {
         return liquidity;
@@ -48,28 +91,5 @@ public class CurrentLiquidityEntity extends ActiveModel {
 
     public void setShortLiabilities(double shortLiabilities) {
         this.shortLiabilities = shortLiabilities;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        CurrentLiquidityEntity that = (CurrentLiquidityEntity) o;
-
-        if (id != that.id) return false;
-        if (Double.compare(that.revolvingAssets, revolvingAssets) != 0) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = id;
-        temp = Double.doubleToLongBits(revolvingAssets);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
     }
 }

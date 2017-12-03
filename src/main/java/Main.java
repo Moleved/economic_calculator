@@ -1,16 +1,7 @@
-import entity.*;
-import org.hibernate.HibernateException;
-import org.hibernate.Metamodel;
-import org.hibernate.query.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import entity.CurrentLiquidityEntity;
+import processors.CurrentLiquidityProcessor;
 
-import javax.persistence.metamodel.EntityType;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.HashMap;
 
 public class Main implements Runnable {
     public static void main(final String[] args) throws Exception {
@@ -29,17 +20,41 @@ public class Main implements Runnable {
 //        prof.setTotalProductSalesCosts(1.0);
 //        prof.save();
 
-        ApplicationEntity app = new ApplicationEntity();
-//        app.setId(13);
+//        ApplicationEntity app = new ApplicationEntity();
+//        app.setId(15);
 //        app.save();
 
 //        LiquidityEntity liq = new LiquidityEntity();
 //        liq.setResult(123.0);
 //        liq.setType("absolute");
-//        liq.setAppId(app);
+//        liq.setApplication(app);
 //
 //        liq.save();
 
+
+
+//        ApplicationEntity last = (ApplicationEntity) app.getLast();
+//
+//        System.out.println(last.getId());
+//
+//        LiquidityEntity liq = new LiquidityEntity();
+//
+//        liq.setResult(1.1);
+//        liq.setType("absolute");
+//        liq.setApplication(last);
+//
+//        liq.save();
+//
+//        CurrentLiquidityEntity cliq = new CurrentLiquidityEntity();
+//
+//        cliq.setRevolvingAssets(2.3);
+//        cliq.setShortLiabilities(43);
+//        cliq.setLiquidity(liq);
+//        cliq.setApplication(last);
+//
+//        cliq.save();
+//
+//        System.out.println(cliq.getLiquidity().getId());
 //
 //        List<ActiveModel> list = liq.getAll();
 //
@@ -47,27 +62,14 @@ public class Main implements Runnable {
 //            LiquidityEntity foo = (LiquidityEntity) elem;
 //            System.out.println(foo.getId() + " : " + foo.getResult()+ " : " + foo.getType());
 //        }
-//
-        ApplicationEntity last = (ApplicationEntity) app.getLast();
-//
-        System.out.println(last.getId());
 
-        LiquidityEntity liq = new LiquidityEntity();
+        CurrentLiquidityEntity entity = new CurrentLiquidityEntity();
+        entity.setRevolvingAssets(75);
+        entity.setShortLiabilities(5);
 
-        liq.setResult(1.1);
-        liq.setType("absolute");
+        CurrentLiquidityProcessor dec = new CurrentLiquidityProcessor(14, entity);
 
-        liq.save();
-
-        CurrentLiquidityEntity cliq = new CurrentLiquidityEntity();
-
-        cliq.setRevolvingAssets(2.3);
-        cliq.setShortLiabilities(43);
-        cliq.setLiquidity(liq);
-
-        cliq.save();
-
-        System.out.println(cliq.getLiquidity().getId());
+        dec.perform();
     }
 
     public void run() {

@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class MessageParser {
     private String message;
 
-    private static String appId;
+    private String appId;
     private String method;
     private String object;
     private String values;
@@ -25,7 +25,7 @@ public class MessageParser {
         this.values = arr[3];
     }
 
-    public static int getAppId() {
+    public int getAppId() {
         return Integer.parseInt(appId);
     }
 

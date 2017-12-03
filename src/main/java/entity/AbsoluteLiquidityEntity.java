@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @Table(name="absolute_liquidity")
@@ -14,11 +15,26 @@ public class AbsoluteLiquidityEntity extends ActiveModel {
     private double funds;
     @Column(name="short_liabilities")
     private double shortLiabilities;
+
     @OneToOne
     @JoinColumns(
             @JoinColumn(name="liquidity_id", referencedColumnName="id")
     )
     private LiquidityEntity liquidity;
+
+    @OneToOne
+    @JoinColumns(
+            @JoinColumn(name="app_id", referencedColumnName="id")
+    )
+    private ApplicationEntity application;
+
+    public ApplicationEntity getApplication() {
+        return application;
+    }
+
+    public void setApplication(ApplicationEntity application) {
+        this.application = application;
+    }
 
     public LiquidityEntity getLiquidity() {
         return liquidity;
@@ -60,29 +76,22 @@ public class AbsoluteLiquidityEntity extends ActiveModel {
         this.funds = funds;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public static ArrayList<AbsoluteLiquidityEntity> getAll() {
+        ArrayList<ActiveModel> list = (ArrayList<ActiveModel>) getAll(AbsoluteLiquidityEntity.class);
+        ArrayList<AbsoluteLiquidityEntity> result = new ArrayList<AbsoluteLiquidityEntity>();
 
-        AbsoluteLiquidityEntity that = (AbsoluteLiquidityEntity) o;
+        for (ActiveModel elem : list) {
+            result.add((AbsoluteLiquidityEntity) elem);
+        }
 
-        if (id != that.id) return false;
-        if (Double.compare(that.shortFinancialInvestments, shortFinancialInvestments) != 0) return false;
-        if (Double.compare(that.funds, funds) != 0) return false;
-
-        return true;
+        return result;
     }
 
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = id;
-        temp = Double.doubleToLongBits(shortFinancialInvestments);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(funds);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
+    public static AbsoluteLiquidityEntity getLast() {
+        return (AbsoluteLiquidityEntity) getLast(AbsoluteLiquidityEntity.class);
+    }
+
+    public static AbsoluteLiquidityEntity getById(int id) {
+        return (AbsoluteLiquidityEntity) getById(id, AbsoluteLiquidityEntity.class);
     }
 }

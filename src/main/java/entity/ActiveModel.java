@@ -6,9 +6,7 @@ import org.hibernate.SessionException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,39 +44,43 @@ public class ActiveModel {
         }
     }
 
-    public Object getById(int id) {
+    public static Object getById(int id, Class klass) {
         Session session = null;
         Object object = null;
         try {
             session = getSession();
-            object = session.load(this.getClass(), id);
+            object = session.load(klass, id);
         } catch (Exception ex) {
             System.out.println(ex);
         }
         return object;
     }
 
-    public List<ActiveModel> getAll() {
+    public static List<ActiveModel> getAll(Class klass) {
         Session session = null;
         List<ActiveModel> list = new ArrayList<ActiveModel>();
         try {
             session = getSession();
-            list = session.createQuery("from " + this.getClass().getSimpleName()).list();
+            list = session.createQuery("from " + klass.getSimpleName()).list();
         } catch(SessionException ex) {
             System.out.println(ex.getStackTrace());
+        } finally {
+            if (session != null && session.isOpen()) session.close();
         }
 
         return list;
     }
 
-    public Object getLast() {
+    public static Object getLast(Class klass) {
         Session session = null;
         Object object = null;
         try {
             session = getSession();
-            object = session.createQuery("FROM " + this.getClass().getSimpleName() + " ORDER BY id DESC").setMaxResults(1).list().get(0);
+            object = session.createQuery("FROM " + klass.getSimpleName() + " ORDER BY id DESC").setMaxResults(1).list().get(0);
         } catch (SessionException se) {
             System.out.println(se.getStackTrace());
+        } finally {
+            if (session != null && session.isOpen()) session.close();
         }
 
         return object;

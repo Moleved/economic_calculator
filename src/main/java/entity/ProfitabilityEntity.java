@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 
 @Entity
 @Table(name="profitability")
@@ -17,6 +18,20 @@ public class ProfitabilityEntity extends ActiveModel {
 
     @Column(name="result")
     private Double result;
+
+    @OneToOne
+    @JoinColumns(
+            @JoinColumn(name="app_id", referencedColumnName="id")
+    )
+    private ApplicationEntity application;
+
+    public ApplicationEntity getApplication() {
+        return application;
+    }
+
+    public void setApplication(ApplicationEntity application) {
+        this.application = application;
+    }
 
     public int getId() {
         return id;
@@ -50,24 +65,22 @@ public class ProfitabilityEntity extends ActiveModel {
         this.result = result;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public static ArrayList<ProfitabilityEntity> getAll() {
+        ArrayList<ActiveModel> list = (ArrayList<ActiveModel>) getAll(ProfitabilityEntity.class);
+        ArrayList<ProfitabilityEntity> result = new ArrayList<ProfitabilityEntity>();
 
-        ProfitabilityEntity that = (ProfitabilityEntity) o;
+        for (ActiveModel elem : list) {
+            result.add((ProfitabilityEntity) elem);
+        }
 
-        if (id != that.id) return false;
-        if (profitFromAllActivities != null ? !profitFromAllActivities.equals(that.profitFromAllActivities) : that.profitFromAllActivities != null)
-            return false;
-
-        return true;
+        return result;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (profitFromAllActivities != null ? profitFromAllActivities.hashCode() : 0);
-        return result;
+    public static ProfitabilityEntity getLast() {
+        return (ProfitabilityEntity) getLast(ProfitabilityEntity.class);
+    }
+    
+    public static ProfitabilityEntity getById(int id) {
+        return (ProfitabilityEntity) getById(id, ProfitabilityEntity.class);
     }
 }

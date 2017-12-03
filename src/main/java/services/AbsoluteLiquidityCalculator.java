@@ -14,18 +14,7 @@ public class AbsoluteLiquidityCalculator {
         this.shortFinancialInvestments = entity.getShortFinancialInvestments();
     }
 
-    public void perform() {
-        double result = calculate();
-
-        LiquidityEntity entity = new LiquidityEntity();
-
-        entity.setType("absolute");
-        entity.setResult(result);
-
-        entity.save();
-    }
-
-    private double calculate() {
+    public double calculate() {
         return (funds + shortFinancialInvestments) / shortLiabilities;
     }
 }

@@ -4,65 +4,59 @@ import entity.AbsoluteLiquidityEntity;
 import entity.ApplicationEntity;
 import entity.CurrentLiquidityEntity;
 import entity.ProfitabilityEntity;
+import processors.AbsoluteLiquidityProcessor;
+import processors.CurrentLiquidityProcessor;
 
 import java.util.HashMap;
 
 public class MessageHandler {
-    private MessageParser parser;
+    private HashMap<String, String> values;
+    private String object;
+    private String method;
+    private int appId;
 
     public MessageHandler(MessageParser parser) {
-        this.parser = parser;
+        this.method = parser.getMethod();
+        this.values = parser.getValues();
+        this.object = parser.getObject();
+        this.appId = parser.getAppId();
 
         handle();
     }
 
     public void handle() {
-        String method = parser.getMethod();
-
-        if (method == "POST") saveObject();
+        if (method == "POST") setObject();
         else if (method == "GET") sendList();
     }
 
     /* POST logic */
 
-    private ApplicationEntity getApplicationById(String id) {
-        Integer appId = Integer.parseInt(id);
-
-        ApplicationEntity entity = new ApplicationEntity();
-        return (ApplicationEntity) entity.getById(appId);
-    }
-
-    private void saveObject() {
-        String object = parser.getObject();
-
-        if (object == "AbsoluteLiquidity") saveAbsoluteLiquidity();
-        else if (object == "CurrentLiquidity") saveCurrentLiquidity();
-        else if (object == "Profitability") saveProfitability();
+    private void setObject() {
+        if (object == "AbsoluteLiquidity") setAbsoluteLiquidity();
+        else if (object == "CurrentLiquidity") setCurrentLiquidity();
+        else if (object == "Profitability") setProfitability();
 
         TCPServer.sendMessage("OK");
     }
 
-    private void saveAbsoluteLiquidity() {
-        HashMap<String, String> values = parser.getValues();
+    private void setAbsoluteLiquidity() {
         AbsoluteLiquidityEntity entity = new AbsoluteLiquidityEntity();
 
         entity.setFunds(Double.parseDouble(values.get("funds")));
         entity.setShortFinancialInvestments(Double.parseDouble(values.get("shortFinancialInvestments")));
 
-        entity.save();
+        new AbsoluteLiquidityProcessor(appId, entity);
     }
 
-    private void saveCurrentLiquidity() {
-        HashMap<String, String> values = parser.getValues();
+    private void setCurrentLiquidity() {
         CurrentLiquidityEntity entity = new CurrentLiquidityEntity();
 
         entity.setRevolvingAssets(Double.parseDouble(values.get("revolvingAssets")));
 
-        entity.save();
+        new CurrentLiquidityProcessor(appId, entity);
     }
 
-    private void saveProfitability() {
-        HashMap<String, String> values = parser.getValues();
+    private void setProfitability() {
         ProfitabilityEntity entity = new ProfitabilityEntity();
 
         entity.setTotalProductSalesCosts(Double.parseDouble(values.get("totalProductSalesCosts")));
