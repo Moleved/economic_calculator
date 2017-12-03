@@ -1,6 +1,9 @@
 package entity;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -18,6 +21,15 @@ public class LiquidityEntity extends ActiveModel {
             @JoinColumn(name="app_id", referencedColumnName="id")
     )
     private ApplicationEntity application;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at")
+    private Date createdAt;
+
+    public String getCreatedAt() {
+        DateFormat resultFormat = new SimpleDateFormat("yy-MM-dd");
+        return resultFormat.format(createdAt);
+    }
 
     public ApplicationEntity getApplication() {
         return application;
@@ -55,11 +67,11 @@ public class LiquidityEntity extends ActiveModel {
         return getAll(LiquidityEntity.class);
     }
 
-    public static Object getLast() {
-        return getLast(LiquidityEntity.class);
+    public static LiquidityEntity getLast() {
+        return (LiquidityEntity) getLast(LiquidityEntity.class);
     }
 
-    public static Object getById(int id) {
-        return getById(id, LiquidityEntity.class);
+    public static LiquidityEntity getById(int id) {
+        return (LiquidityEntity) getById(id, LiquidityEntity.class);
     }
 }

@@ -1,7 +1,10 @@
 package entity;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 @Entity
 @Table(name="profitability")
@@ -24,6 +27,44 @@ public class ProfitabilityEntity extends ActiveModel {
             @JoinColumn(name="app_id", referencedColumnName="id")
     )
     private ApplicationEntity application;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at")
+    private Date createdAt;
+
+    public String getCreatedAt() {
+        DateFormat resultFormat = new SimpleDateFormat("yy-MM-dd");
+        return resultFormat.format(createdAt);
+    }
+
+    @Override
+    public String toString() {
+        return "profitFromAllActivities:" + profitFromAllActivities +
+                ",totalProductSalesCosts:" + totalProductSalesCosts +
+                ",result:" + getResult() +
+                ",date:" + getCreatedAt();
+    }
+
+    public static ArrayList<ProfitabilityEntity> getAll() {
+        ArrayList<ActiveModel> list = (ArrayList<ActiveModel>) getAll(ProfitabilityEntity.class);
+        ArrayList<ProfitabilityEntity> result = new ArrayList<ProfitabilityEntity>();
+
+        for (ActiveModel elem : list) {
+            result.add((ProfitabilityEntity) elem);
+        }
+
+        return result;
+    }
+
+    public static ProfitabilityEntity getLast() {
+        return (ProfitabilityEntity) getLast(ProfitabilityEntity.class);
+    }
+    
+    public static ProfitabilityEntity getById(int id) {
+        return (ProfitabilityEntity) getById(id, ProfitabilityEntity.class);
+    }
+
+    /* Getters and Setters */
 
     public ApplicationEntity getApplication() {
         return application;
@@ -63,24 +104,5 @@ public class ProfitabilityEntity extends ActiveModel {
 
     public void setResult(Double result) {
         this.result = result;
-    }
-
-    public static ArrayList<ProfitabilityEntity> getAll() {
-        ArrayList<ActiveModel> list = (ArrayList<ActiveModel>) getAll(ProfitabilityEntity.class);
-        ArrayList<ProfitabilityEntity> result = new ArrayList<ProfitabilityEntity>();
-
-        for (ActiveModel elem : list) {
-            result.add((ProfitabilityEntity) elem);
-        }
-
-        return result;
-    }
-
-    public static ProfitabilityEntity getLast() {
-        return (ProfitabilityEntity) getLast(ProfitabilityEntity.class);
-    }
-    
-    public static ProfitabilityEntity getById(int id) {
-        return (ProfitabilityEntity) getById(id, ProfitabilityEntity.class);
     }
 }

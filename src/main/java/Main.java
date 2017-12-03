@@ -1,6 +1,13 @@
+import entity.AbsoluteLiquidityEntity;
+import entity.ApplicationEntity;
 import entity.CurrentLiquidityEntity;
+import entity.LiquidityEntity;
+import processors.AbsoluteLiquidityProcessor;
 import processors.CurrentLiquidityProcessor;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 public class Main implements Runnable {
@@ -63,13 +70,44 @@ public class Main implements Runnable {
 //            System.out.println(foo.getId() + " : " + foo.getResult()+ " : " + foo.getType());
 //        }
 
-        CurrentLiquidityEntity entity = new CurrentLiquidityEntity();
-        entity.setRevolvingAssets(75);
-        entity.setShortLiabilities(5);
+//        CurrentLiquidityEntity entity = new CurrentLiquidityEntity();
+//        entity.setRevolvingAssets(75);
+//        entity.setShortLiabilities(5);
+//
+//        CurrentLiquidityProcessor dec = new CurrentLiquidityProcessor(14, entity);
+//
+//        dec.perform();
+//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String dt = "2017-12-03 13:51:24";
+//        System.out.println(df.parse(dt));
+//
+//        Date date = df.parse(dt);
+//
+//        DateFormat f = new SimpleDateFormat("yy-MM-dd");
+//        System.out.println(f.format(date));
 
-        CurrentLiquidityProcessor dec = new CurrentLiquidityProcessor(14, entity);
+//        LiquidityEntity liq = new LiquidityEntity();
+//
+//        liq.setApplication(ApplicationEntity.getById(14));
+//        liq.setResult(234.2);
+//        liq.setType("asdf");
+//
+//        liq.save();
+//
+//        LiquidityEntity last = LiquidityEntity.getLast();
+//
+//        System.out.println(last.getCreatedAt());
 
-        dec.perform();
+        AbsoluteLiquidityEntity abs = new AbsoluteLiquidityEntity();
+        abs.setShortFinancialInvestments(1243.0);
+        abs.setFunds(235.34);
+        abs.setShortLiabilities(4325.543);
+
+        new AbsoluteLiquidityProcessor(14, abs).perform();
+
+        abs = AbsoluteLiquidityEntity.getLast();
+
+        System.out.println(abs);
     }
 
     public void run() {

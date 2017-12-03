@@ -24,6 +24,14 @@ public class CurrentLiquidityEntity extends ActiveModel {
     )
     private ApplicationEntity application;
 
+    @Override
+    public String toString() {
+        return "revolvingAssets:" + revolvingAssets +
+                ",shortLiabilities:" + shortLiabilities +
+                ",result:" + getLiquidity().getResult() +
+                ",date:" + getLiquidity().getCreatedAt();
+    }
+
     public static ArrayList<CurrentLiquidityEntity> getAll() {
         ArrayList<ActiveModel> list = (ArrayList<ActiveModel>) getAll(CurrentLiquidityEntity.class);
         ArrayList<CurrentLiquidityEntity> result = new ArrayList<CurrentLiquidityEntity>();

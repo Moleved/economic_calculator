@@ -28,6 +28,36 @@ public class AbsoluteLiquidityEntity extends ActiveModel {
     )
     private ApplicationEntity application;
 
+    public static ArrayList<AbsoluteLiquidityEntity> getAll() {
+        ArrayList<ActiveModel> list = (ArrayList<ActiveModel>) getAll(AbsoluteLiquidityEntity.class);
+        ArrayList<AbsoluteLiquidityEntity> result = new ArrayList<AbsoluteLiquidityEntity>();
+
+        for (ActiveModel elem : list) {
+            result.add((AbsoluteLiquidityEntity) elem);
+        }
+
+        return result;
+    }
+
+    public static AbsoluteLiquidityEntity getLast() {
+        return (AbsoluteLiquidityEntity) getLast(AbsoluteLiquidityEntity.class);
+    }
+
+    public static AbsoluteLiquidityEntity getById(int id) {
+        return (AbsoluteLiquidityEntity) getById(id, AbsoluteLiquidityEntity.class);
+    }
+
+    @Override
+    public String toString() {
+        return "shortFinancialInvestments:" + shortFinancialInvestments +
+                ",funds:" + funds +
+                ",shortLiabilities:" + shortLiabilities +
+                ",result:" + getLiquidity().getResult() +
+                ",date:" + getLiquidity().getCreatedAt();
+    }
+
+    /* Getters and Setters */
+
     public ApplicationEntity getApplication() {
         return application;
     }
@@ -76,22 +106,4 @@ public class AbsoluteLiquidityEntity extends ActiveModel {
         this.funds = funds;
     }
 
-    public static ArrayList<AbsoluteLiquidityEntity> getAll() {
-        ArrayList<ActiveModel> list = (ArrayList<ActiveModel>) getAll(AbsoluteLiquidityEntity.class);
-        ArrayList<AbsoluteLiquidityEntity> result = new ArrayList<AbsoluteLiquidityEntity>();
-
-        for (ActiveModel elem : list) {
-            result.add((AbsoluteLiquidityEntity) elem);
-        }
-
-        return result;
-    }
-
-    public static AbsoluteLiquidityEntity getLast() {
-        return (AbsoluteLiquidityEntity) getLast(AbsoluteLiquidityEntity.class);
-    }
-
-    public static AbsoluteLiquidityEntity getById(int id) {
-        return (AbsoluteLiquidityEntity) getById(id, AbsoluteLiquidityEntity.class);
-    }
 }

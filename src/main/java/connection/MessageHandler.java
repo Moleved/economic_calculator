@@ -7,6 +7,7 @@ import entity.ProfitabilityEntity;
 import processors.AbsoluteLiquidityProcessor;
 import processors.CurrentLiquidityProcessor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MessageHandler {
@@ -36,7 +37,7 @@ public class MessageHandler {
         else if (object == "CurrentLiquidity") setCurrentLiquidity();
         else if (object == "Profitability") setProfitability();
 
-        TCPServer.sendMessage("OK");
+        TCPServer.sendMessage("200");
     }
 
     private void setAbsoluteLiquidity() {
@@ -68,6 +69,43 @@ public class MessageHandler {
     /* GET logic */
 
     private void sendList() {
+        String response = "404";
+        if (object == "AbsoluteLiquidity") response = listAbsoluteLiquidity();
+        else if (object == "CurrentLiquidity") response = listCurrentLiquidity();
+        else if (object == "Profitability") response = listProfitability();
+        TCPServer.sendMessage(response);
+    }
 
+    private String listAbsoluteLiquidity() {
+        ArrayList<AbsoluteLiquidityEntity> list = AbsoluteLiquidityEntity.getAll();
+        String result = "AbsoluteLiquidityEntity;";
+
+        for (AbsoluteLiquidityEntity ent : list) {
+            result += (ent.toString() + ";");
+        }
+
+        return result;
+    }
+
+    private String listCurrentLiquidity() {
+        ArrayList<CurrentLiquidityEntity> list = CurrentLiquidityEntity.getAll();
+        String result = "CurrentLiquidityEntity;";
+
+        for (CurrentLiquidityEntity ent : list) {
+            result += (ent.toString() + ";");
+        }
+
+        return result;
+    }
+
+    private String listProfitability() {
+        ArrayList<ProfitabilityEntity> list = ProfitabilityEntity.getAll();
+        String result = "ProfitabilityEntity;";
+
+        for (ProfitabilityEntity ent : list) {
+            result += (ent.toString() + ";");
+        }
+
+        return result;
     }
 }
