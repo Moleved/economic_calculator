@@ -24,8 +24,7 @@ public class CurrentLiquidityEntity extends ActiveModel {
     )
     private ApplicationEntity application;
 
-    @Override
-    public String toString() {
+    public String toStr() {
         return "revolvingAssets:" + revolvingAssets +
                 ",shortLiabilities:" + shortLiabilities +
                 ",result:" + getLiquidity().getResult() +
@@ -51,7 +50,7 @@ public class CurrentLiquidityEntity extends ActiveModel {
         }
     }
 
-    public static CurrentLiquidityEntity getById(int id) {
+    public static CurrentLiquidityEntity getById(Long id) {
         try {
             return (CurrentLiquidityEntity) getById(id, CurrentLiquidityEntity.class);
         } catch (Exception ex) {

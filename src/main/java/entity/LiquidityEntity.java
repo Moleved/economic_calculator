@@ -71,7 +71,7 @@ public class LiquidityEntity extends ActiveModel {
         return (LiquidityEntity) getLast(LiquidityEntity.class);
     }
 
-    public static LiquidityEntity getById(int id) {
+    public static LiquidityEntity getById(Long id) {
         return (LiquidityEntity) getById(id, LiquidityEntity.class);
     }
 }

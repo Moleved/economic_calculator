@@ -3,10 +3,10 @@ package processors;
 import entity.ApplicationEntity;
 
 public class EntityProcessor {
-    private int appId;
+    private Long appId;
     protected ApplicationEntity application;
 
-    public EntityProcessor(int appId) {
+    public EntityProcessor(Long appId) {
         this.appId = appId;
     }
 

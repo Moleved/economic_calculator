@@ -37,8 +37,7 @@ public class ProfitabilityEntity extends ActiveModel {
         return resultFormat.format(createdAt);
     }
 
-    @Override
-    public String toString() {
+    public String toStr() {
         return "profitFromAllActivities:" + profitFromAllActivities +
                 ",totalProductSalesCosts:" + totalProductSalesCosts +
                 ",result:" + getResult() +
@@ -60,7 +59,7 @@ public class ProfitabilityEntity extends ActiveModel {
         return (ProfitabilityEntity) getLast(ProfitabilityEntity.class);
     }
     
-    public static ProfitabilityEntity getById(int id) {
+    public static ProfitabilityEntity getById(Long id) {
         return (ProfitabilityEntity) getById(id, ProfitabilityEntity.class);
     }
 

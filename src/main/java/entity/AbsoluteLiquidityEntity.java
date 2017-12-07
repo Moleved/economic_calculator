@@ -43,12 +43,11 @@ public class AbsoluteLiquidityEntity extends ActiveModel {
         return (AbsoluteLiquidityEntity) getLast(AbsoluteLiquidityEntity.class);
     }
 
-    public static AbsoluteLiquidityEntity getById(int id) {
+    public static AbsoluteLiquidityEntity getById(Long id) {
         return (AbsoluteLiquidityEntity) getById(id, AbsoluteLiquidityEntity.class);
     }
 
-    @Override
-    public String toString() {
+    public String toStr() {
         return "shortFinancialInvestments:" + shortFinancialInvestments +
                 ",funds:" + funds +
                 ",shortLiabilities:" + shortLiabilities +

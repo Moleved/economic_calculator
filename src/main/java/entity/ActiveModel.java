@@ -1,9 +1,6 @@
 package entity;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionException;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 
 import java.lang.reflect.Method;
@@ -44,14 +41,18 @@ public class ActiveModel {
         }
     }
 
-    public static Object getById(int id, Class klass) {
+    public static Object getById(Long id, Class klass) {
         Session session = null;
         Object object = null;
         try {
             session = getSession();
             object = session.load(klass, id);
-        } catch (Exception ex) {
+            System.out.println(object);
+            System.out.println(object.getClass().getSimpleName());
+            if (object.getClass().getSimpleName().equals("ObjectNotFoundException")) return null;
+        } catch (ObjectNotFoundException ex) {
             System.out.println(ex);
+            return null;
         }
         return object;
     }

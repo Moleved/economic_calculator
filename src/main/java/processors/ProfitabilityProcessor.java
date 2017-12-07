@@ -6,7 +6,7 @@ import services.ProfitabilityCalculator;
 public class ProfitabilityProcessor extends EntityProcessor {
     private ProfitabilityEntity entity;
 
-    public ProfitabilityProcessor(int appId, ProfitabilityEntity entity) {
+    public ProfitabilityProcessor(Long appId, ProfitabilityEntity entity) {
         super(appId);
         this.entity = entity;
     }

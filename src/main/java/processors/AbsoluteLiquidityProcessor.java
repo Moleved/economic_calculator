@@ -7,7 +7,7 @@ public class AbsoluteLiquidityProcessor extends LiquidityProcessor {
     private final String TYPE = "absolute";
     private AbsoluteLiquidityEntity entity;
 
-    public AbsoluteLiquidityProcessor(int appId, AbsoluteLiquidityEntity entity) {
+    public AbsoluteLiquidityProcessor(Long appId, AbsoluteLiquidityEntity entity) {
         super(appId);
         this.entity = entity;
     }

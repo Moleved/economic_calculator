@@ -10,13 +10,13 @@ import java.util.ArrayList;
 @Table(name="application")
 public class ApplicationEntity extends ActiveModel {
     @Id @Column(name="id")
-    private int id;
+    private Long id;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -39,7 +39,7 @@ public class ApplicationEntity extends ActiveModel {
         }
     }
 
-    public static ApplicationEntity getById(int id) {
+    public static ApplicationEntity getById(Long id) {
         try {
             return (ApplicationEntity) getById(id, ApplicationEntity.class);
         } catch (Exception ex) {

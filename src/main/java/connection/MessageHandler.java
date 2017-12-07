@@ -6,6 +6,7 @@ import entity.CurrentLiquidityEntity;
 import entity.ProfitabilityEntity;
 import processors.AbsoluteLiquidityProcessor;
 import processors.CurrentLiquidityProcessor;
+import processors.ProfitabilityProcessor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,30 +15,29 @@ public class MessageHandler {
     private HashMap<String, String> values;
     private String object;
     private String method;
-    private int appId;
+    private Long appId;
 
     public MessageHandler(MessageParser parser) {
         this.method = parser.getMethod();
         this.values = parser.getValues();
         this.object = parser.getObject();
         this.appId = parser.getAppId();
-
-        handle();
     }
 
-    public void handle() {
-        if (method == "POST") setObject();
-        else if (method == "GET") sendList();
+    public String handle() {
+        if (method.equals("POST")) return setObject();
+        else if (method.equals("GET")) return sendList();
+        return "";
     }
 
     /* POST logic */
 
-    private void setObject() {
-        if (object == "AbsoluteLiquidity") setAbsoluteLiquidity();
-        else if (object == "CurrentLiquidity") setCurrentLiquidity();
-        else if (object == "Profitability") setProfitability();
+    private String setObject() {
+        if (object.equals("AbsoluteLiquidity")) setAbsoluteLiquidity();
+        else if (object.equals("CurrentLiquidity")) setCurrentLiquidity();
+        else if (object.equals("Profitability")) setProfitability();
 
-        TCPServer.sendMessage("200");
+        return "200";
     }
 
     private void setAbsoluteLiquidity() {
@@ -45,16 +45,18 @@ public class MessageHandler {
 
         entity.setFunds(Double.parseDouble(values.get("funds")));
         entity.setShortFinancialInvestments(Double.parseDouble(values.get("shortFinancialInvestments")));
+        entity.setShortLiabilities(Double.parseDouble(values.get("shortLiabilities")));
 
-        new AbsoluteLiquidityProcessor(appId, entity);
+        new AbsoluteLiquidityProcessor(appId, entity).perform();
     }
 
     private void setCurrentLiquidity() {
         CurrentLiquidityEntity entity = new CurrentLiquidityEntity();
 
         entity.setRevolvingAssets(Double.parseDouble(values.get("revolvingAssets")));
+        entity.setShortLiabilities(Double.parseDouble(values.get("shortLiabilities")));
 
-        new CurrentLiquidityProcessor(appId, entity);
+        new CurrentLiquidityProcessor(appId, entity).perform();
     }
 
     private void setProfitability() {
@@ -63,17 +65,17 @@ public class MessageHandler {
         entity.setTotalProductSalesCosts(Double.parseDouble(values.get("totalProductSalesCosts")));
         entity.setProfitFromAllActivities(Double.parseDouble(values.get("profitFromAllActivities")));
 
-        entity.save();
+        new ProfitabilityProcessor(appId, entity).perform();
     }
 
     /* GET logic */
 
-    private void sendList() {
+    private String sendList() {
         String response = "404";
-        if (object == "AbsoluteLiquidity") response = listAbsoluteLiquidity();
-        else if (object == "CurrentLiquidity") response = listCurrentLiquidity();
-        else if (object == "Profitability") response = listProfitability();
-        TCPServer.sendMessage(response);
+        if (object.equals("AbsoluteLiquidity")) response = listAbsoluteLiquidity();
+        else if (object.equals("CurrentLiquidity")) response = listCurrentLiquidity();
+        else if (object.equals("Profitability")) response = listProfitability();
+        return response;
     }
 
     private String listAbsoluteLiquidity() {
@@ -81,7 +83,7 @@ public class MessageHandler {
         String result = "AbsoluteLiquidityEntity>";
 
         for (AbsoluteLiquidityEntity ent : list) {
-            result += (ent.toString() + ";");
+            result += (ent.toStr() + ";");
         }
 
         return result + "break";
@@ -92,7 +94,7 @@ public class MessageHandler {
         String result = "CurrentLiquidityEntity>";
 
         for (CurrentLiquidityEntity ent : list) {
-            result += (ent.toString() + ";");
+            result += (ent.toStr() + ";");
         }
 
         return result + "break";
@@ -103,7 +105,7 @@ public class MessageHandler {
         String result = "ProfitabilityEntity>";
 
         for (ProfitabilityEntity ent : list) {
-            result += (ent.toString() + ";");
+            result += (ent.toStr() + ";");
         }
 
         return result + "break";

@@ -5,7 +5,7 @@ import entity.LiquidityEntity;
 public abstract class LiquidityProcessor extends EntityProcessor {
     protected LiquidityEntity liquidity = new LiquidityEntity();
 
-    public LiquidityProcessor(int appId) {
+    public LiquidityProcessor(Long appId) {
         super(appId);
     }
 

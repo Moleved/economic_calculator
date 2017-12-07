@@ -7,7 +7,7 @@ public class CurrentLiquidityProcessor extends LiquidityProcessor {
     private final String TYPE = "current";
     private CurrentLiquidityEntity entity;
 
-    public CurrentLiquidityProcessor(int appId, CurrentLiquidityEntity entity) {
+    public CurrentLiquidityProcessor(Long appId, CurrentLiquidityEntity entity) {
         super(appId);
         this.entity = entity;
     }

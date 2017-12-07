@@ -5,10 +5,10 @@ import java.util.HashMap;
 public class MessageParser {
     private String message;
 
-    private String appId;
-    private String method;
-    private String object;
-    private String values;
+    private String appId  = "";
+    private String method = "";
+    private String object = "";
+    private String values = "";
 
     public MessageParser(String message) {
         this.message = message;
@@ -19,14 +19,14 @@ public class MessageParser {
     public void parse() {
         String[] arr = message.split(";");
 
-        appId = arr[0];
+        this.appId  = arr[0];
         this.method = arr[1];
         this.object = arr[2];
-        this.values = arr[3];
+        if (method.equals("POST")) this.values = arr[3];
     }
 
-    public int getAppId() {
-        return Integer.parseInt(appId);
+    public Long getAppId() {
+        return Long.parseLong(appId);
     }
 
     public String getMethod() {
@@ -39,6 +39,8 @@ public class MessageParser {
 
     public HashMap<String, String> getValues() {
         HashMap<String, String> map = new HashMap<String, String>();
+
+        if (values.equals("")) return map;
 
         String[] arr = values.split(",");
 
